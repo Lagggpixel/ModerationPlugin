@@ -1,0 +1,18 @@
+name: Moderation
+version: '${project.version}'
+main: me.lagggpixel.moderation.Main
+api-version: 1.19
+authors: [ Lagggpixel ]
+depend:
+  - AdvancedVanish
+commands:
+  mod:
+    permission: staff.mod
+  freeze:
+    permission: staff.freeze
+
+permissions:
+  staff.mod:
+    description: Allows usage of /mod command
+  staff.freeze:
+    description: Allows usage of /freeze command
