@@ -9,15 +9,45 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.*;
 
 import java.util.UUID;
 
 public class PlayerFrozenListeners implements Listener {
     public PlayerFrozenListeners() {
         Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
+    }
+
+    @EventHandler
+    public void PlayerQuitEvent(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+
+        if (Main.getInstance().getPlayers().get(uuid).isFrozen()) {
+            MessageManager.getInstance().sendLoggedOutWhileFrozen(player);
+        }
+    }
+
+    @EventHandler
+    public void PlayerInteractEvent(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+
+        if (Main.getInstance().getPlayers().get(uuid).isFrozen()) {
+            event.setCancelled(true);
+            MessageManager.getInstance().sendCannotDoThatWhileFrozen(player);
+        }
+    }
+
+    @EventHandler
+    public void PlayerMoveEvent(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+
+        if (Main.getInstance().getPlayers().get(uuid).isFrozen()) {
+            event.setCancelled(true);
+            MessageManager.getInstance().sendCannotDoThatWhileFrozen(player);
+        }
     }
 
     @EventHandler
@@ -79,7 +109,7 @@ public class PlayerFrozenListeners implements Listener {
         if (event.getEntity() instanceof Player entity) {
             if (Main.getInstance().getPlayers().get(entity.getUniqueId()).isFrozen()) {
                 if (event.getDamager() instanceof Player) {
-                    MessageManager.getInstance().sendCannotDoThatWhileFrozen((Player) event.getDamager());
+                    MessageManager.getInstance().sendCannotHitFrozenPlayer((Player) event.getDamager());
                 }
                 event.setCancelled(true);
             }

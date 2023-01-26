@@ -1,6 +1,7 @@
 package me.lagggpixel.moderation;
 
 import lombok.Getter;
+import me.lagggpixel.moderation.Commands.FreezeCommand;
 import me.lagggpixel.moderation.Commands.ModCommand;
 import me.lagggpixel.moderation.Listeners.PlayerFrozenListeners;
 import me.lagggpixel.moderation.Listeners.PlayerInteractListener;
@@ -40,6 +41,7 @@ public final class Main extends JavaPlugin {
 
     private void setupCommands() {
         new ModCommand();
+        new FreezeCommand();
     }
     private void setupListeners() {
         new PlayerModListeners();

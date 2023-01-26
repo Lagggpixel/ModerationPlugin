@@ -14,5 +14,13 @@ commands:
 permissions:
   staff.mod:
     description: Allows usage of /mod command
+    default: op
   staff.freeze:
     description: Allows usage of /freeze command
+    default: op
+
+  staff.unfreezable:
+    description: Makes the player un-freeze-able
+    default: op
+  staff.notify:
+    description: Staff member is notified when a frozen player logs out
